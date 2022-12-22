@@ -4,31 +4,24 @@ import Home from 'pages/home';
 import NotFound from 'pages/notfound';
 import Login from 'features/users/login/auth';
 import Board from 'features/community-board/index';
-import Calender from 'pages/calender'
+import Calender from 'pages/diary';
 const Router = ({ refreshUser, userObj }) => {
   console.log(userObj);
   return (
     <>
       <Routes>
-        {userObj ? (
-          <>
-            <Route exact path='/' element={<Home userObj={userObj} />} />
-            <Route
-              path='/board/*'
-              element={<Board userObj={userObj} refreshUser={refreshUser} />}
-            /> <Route
-            path='/calender'
-            element={<Calender userObj={userObj} refreshUser={refreshUser} />}
-          />
-            <Route element={<NotFound />} />
-            <Route path='/redirect' element={<Navigate to='/not-found' />} />
-          </>
-        ) : (
-          <>
-            <Route path='/login' element={<Login />} />
-            <Route path='/404' element={<NotFound />} />
-          </>
-        )}
+        <>
+          <Route exact path='/' element={<Home userObj={userObj} />} />
+          <Route path='/board/*' element={<Board userObj={userObj} />} />{' '}
+          <Route path='/calender' element={<Calender userObj={userObj} />} />
+          <Route element={<NotFound />} />
+          <Route path='/redirect' element={<Navigate to='/not-found' />} />
+        </>
+
+        <>
+          <Route path='/login' element={<Login />} />
+          <Route path='/404' element={<NotFound />} />
+        </>
       </Routes>
     </>
   );

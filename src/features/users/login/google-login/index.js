@@ -1,46 +1,26 @@
 import { Button } from 'features/ui';
-import React from "react";
-import { authService, firebaseInstance } from "Fbase";
-
+import React from 'react';
+import { authService, firebaseInstance } from 'Fbase';
+import { useNavigate } from 'react-router-dom';
 
 const GoogleLogin = () => {
-  const onSocialClick = async (event) => {
-    console.log(event.target.value)
+  const navigate = useNavigate();
+  const onSocialClick = (event) => {
     const {
       target: { name },
     } = event;
     let provider;
-    if (name === "google") {
+    if (name === 'google') {
       provider = new firebaseInstance.auth.GoogleAuthProvider();
-    } else if (name === "github") {
-      provider = new firebaseInstance.auth.GithubAuthProvider();
     }
-    await authService.signInWithPopup(provider);
+    authService.signInWithPopup(provider).then(() => {
+      navigate('/');
+    });
   };
 
   return (
     <>
-      {/* {user ? (
-        <Button
-          name='google'
-          value='로그아웃'
-        />
-      ) : (
-        <Button
-          name='google'
-          value='로그인'
-        />
-      )} */}
-      <Button
-          name='google'
-          value='구글로그인'
-          onClick={onSocialClick}
-        />
-      <Button
-          name='github'
-          value='깃헙로그인'
-          onClick={onSocialClick}
-        />
+      <Button name='google' value='구글로그인' onClick={onSocialClick} />
     </>
   );
 };

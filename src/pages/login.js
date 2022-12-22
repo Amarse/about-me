@@ -3,9 +3,9 @@ import Auth from 'features/users/login/auth';
 
 const Login = () => {
   return (
-    <div>
+    <main className="body">
       <Auth />
-    </div>
+    </main>
   );
 };
 

@@ -1,6 +1,6 @@
 @use './theme.scss';
 
-@mixin size($width: 16px, $height: 16px) {
+@mixin size($width: 12px, $height: 12px) {
   width: $width;
   height: $height;
 }

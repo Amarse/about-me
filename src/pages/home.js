@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dbService } from "Fbase";
-import Career from "features/users/career";
-import Navi from "features/ui/navi";
-import Calender from './calender'
+import Calender from './diary'
 
 
 const Home = ({ userObj }) => {
@@ -20,12 +18,12 @@ const Home = ({ userObj }) => {
 
 
   return (
-    <div>
+    <main className="body">
       {/* <Navi userObj={userObj} /> */}
       <div>
         <Calender />
       </div>
-    </div>
+    </main>
   );
 };
 

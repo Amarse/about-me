@@ -16,7 +16,6 @@ function App() {
           uid: user.uid,
           email: user.email,
           profile: user.photoURL,
-          updateProfile: (args) => user.updateProfile(args),
         });
       } else {
         setUserObj(null);
@@ -25,23 +24,11 @@ function App() {
     });
   }, []);
 
-  const refreshUser = () => {
-    const user = authService.currentUser;
-    setUserObj({
-      displayName: user.displayName,
-      uid: user.uid,
-      email: user.email,
-      profile: user.photoURL,
-      updateProfile: (args) => user.updateProfile(args),
-    });
-  };
   return (
     <>
       <Navi userObj={userObj} />
       {init ? (
         <AppRouter
-          refreshUser={refreshUser}
-          isLoggedIn={Boolean(userObj)}
           userObj={userObj}
         />
       ) : (

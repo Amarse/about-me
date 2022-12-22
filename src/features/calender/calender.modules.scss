@@ -1,0 +1,95 @@
+@use '../../styles/theme.scss';
+@use '../../styles/common.scss' as common;
+
+.calendar {
+  @include common.size(60%, 90%);
+  margin: 0 auto;
+  .header {
+    @include common.size(100%, 9%);
+    @include common.flex-row(space-between, center);
+    .col.col-first {
+      @include common.size(2%, 100%);
+      @include common.flex-column(center, center);
+      .text {
+        font-size: 1.5em;
+      }
+    }
+  
+    .col.col-month {
+      @include common.size(20%, 20%);
+      svg {
+        @include common.size(8%, fit-content);
+        margin-left: 5%;
+        color: transparentize(gray, 0.2);
+        &:hover {
+          @include common.hover-event();
+          transform: scale(1.15);
+          color: theme.$main-color;
+        }
+      }
+    }
+    .col-end {
+      @include common.flex-row(flex-end, baseline);
+
+    }
+  }
+  .days {
+    @include common.size(100%, fit-content);
+    @include common.flex-row(space-between, center);
+    font-weight: 600;
+    padding: 15px 0;
+    margin: 0;
+    color: theme.$dark-gray-color;
+    .col {
+      @include common.size(12.9%, 100%);
+      @include common.flex-column(flex-end, flex-start);
+      padding: 0.5% 0 0.5% 1%;      
+      font-size: 1.2em;
+      // background: transparentize(theme.$step-color, 0.6);
+      // border-radius: 10px;
+    }
+  }
+  .body {
+    @include common.size(100%, 89%);
+    @include common.flex-column();
+    .row {
+      @include common.size(100%, 100%);
+      @include common.flex-row(space-between, center);
+      margin: 0 0 4px 0;
+      .col {
+        @include common.size(100%, 100%);
+        @include common.flex-row(flex-start, flex-start);
+        margin: 0 0 0 4px;
+        border: 0.4px solid transparentize(gray, 0.08);
+        border-radius: 3px;
+        font-size: 1em;
+        span {
+          margin: 4px 0 0 4px;
+        }
+        .not-valid {
+          color: theme.$gray-color;
+        }
+        img {
+          opacity: 0.1;
+        }
+      }
+      .col.cell.valid {
+        &:hover {
+          @include common.hover-event();
+          @include common.shadow(1.5px, theme.$dark-gray-color, 0.1);
+          transform: scale(1.01);
+          border: none;
+          background: transparentize(theme.$gray-color, 0.5);
+        }
+      }
+      .col.cell.selected {
+        @include common.shadow(1.5px, theme.$main-color, 0.1);
+        transform: scale(1.02);
+        border: none;
+        background: theme.$sub-color;
+        color: theme.$main-color;
+        font-weight: 600;
+      }
+    }
+  }
+}
