@@ -1,10 +1,11 @@
 import React from 'react';
 import Calender from 'features/calender';
 
-const Diary = () => {
+const Diary = ({userObj}) => {
+  console.log('user', userObj)
   return (
     <main className="body">
-      <Calender />
+      <Calender userObj={userObj}/>
     </main>
   );
 };

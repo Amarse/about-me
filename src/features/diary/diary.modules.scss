@@ -1,0 +1,31 @@
+@use '../../styles//common';
+@use '../../styles/theme.scss';
+
+.diary-modal-continer {
+  @include common.size(100%, 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparentize(theme.$gray-color, 0.5);
+  .diary-modal {
+    @include common.size(50%, 60%);
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    background-color: theme.$sub-color;
+    .icon{
+      svg {
+        @include common.size(8%, fit-content);
+        margin-left: 5%;
+        color: transparentize(gray, 0.2);
+        &:hover {
+          @include common.hover-event();
+          transform: scale(1.15);
+          color: theme.$main-color;
+        }
+      }
+    }
+  }
+  
+
+}

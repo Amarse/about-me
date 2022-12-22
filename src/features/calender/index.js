@@ -1,10 +1,20 @@
 import './calender.modules.scss';
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { format, addMonths, subMonths } from 'date-fns';
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
-import { isSameMonth, isSameDay, addDays, parseISO } from 'date-fns';
-import BoarddWrite from 'features/community-board/board-write';
+import {
+  format,
+  addMonths,
+  subMonths,
+  parse,
+  isSameMonth,
+  isSameDay,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+} from 'date-fns';
+import DiaryWrite from 'features/diary';
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
@@ -56,7 +66,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       formattedDate = format(day, 'd');
       const cloneDay = day;
       days.push(
-        <div 
+        <div
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? 'disabled'
@@ -67,7 +77,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
               : 'valid'
           }`}
           key={day}
-          onClick={() => onDateClick(parseISO(cloneDay))}
+          onClick={() => onDateClick(parse(cloneDay))}
         >
           <span
             className={
@@ -92,12 +102,11 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   return <div className='body'>{rows}</div>;
 };
 
-const Calender = () => {
-
+const Calender = (props) => {
+  console.log('user',props)
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const centent = <BoarddWrite />
-
+  const [isDiaryOpen, setIsDiaryOpen] = useState(false);
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -105,9 +114,13 @@ const Calender = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
   const onDateClick = (day) => {
-    console.log(day)
     setSelectedDate(day);
   };
+
+  const onClick = (event) => {
+    event.preventDefault();
+    setIsDiaryOpen(true)
+  }
 
   return (
     <div className='calendar'>
@@ -121,8 +134,11 @@ const Calender = () => {
         currentMonth={currentMonth}
         selectedDate={selectedDate}
         onDateClick={onDateClick}
-        centent={centent}
       />
+      <Icon icon='ph:pencil-line-thin' onClick={onClick} />
+      {isDiaryOpen && (
+        <DiaryWrite isDiaryOpen={isDiaryOpen} userObj={props.userObj} selectedDate={selectedDate} setIsDiaryOpen={setIsDiaryOpen}/>
+      )}
     </div>
   );
 };

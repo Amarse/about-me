@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AppRouter from './router';
 import Navi from 'features/ui/navi';
 import { authService } from 'Fbase';
+import { DiaryContextProvider } from 'centext/diary.context';
 
 function App() {
   const [init, setInit] = useState(false);
@@ -28,9 +29,9 @@ function App() {
     <>
       <Navi userObj={userObj} />
       {init ? (
-        <AppRouter
-          userObj={userObj}
-        />
+        <DiaryContextProvider>
+          <AppRouter userObj={userObj}  />
+        </DiaryContextProvider>
       ) : (
         'loading...'
       )}

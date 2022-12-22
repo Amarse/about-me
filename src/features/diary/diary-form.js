@@ -1,5 +1,5 @@
 import 'react-quill/dist/quill.snow.css';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input } from 'features/ui';
 import { Button } from 'react-bootstrap';
 import ReactQuill, { Quill } from 'react-quill';
@@ -8,7 +8,7 @@ import { dbService } from 'Fbase';
 import ImageResize from 'quill-image-resize';
 Quill.register('modules/ImageResize', ImageResize);
 
-const BoarddWrite = ({ userObj }) => {
+const DiaryForm = ({ userObj, seletedDate }) => {
   const navigate = useNavigate();
   const [quillText, setQuillText] = useState('');
   const [title, setTitle] = useState('');
@@ -34,7 +34,7 @@ const BoarddWrite = ({ userObj }) => {
 
   const borad = {
     content: quillText,
-    date: Date.now(),
+    date: seletedDate,
     uid: userObj.uid,
     title: title,
     // veiw: veiw,
@@ -54,8 +54,8 @@ const BoarddWrite = ({ userObj }) => {
     if (name === 'cancel') {
       navigate('/board');
     }
-    if(name === 'save') {
-      window.alert("저장하시겠습니까?")
+    if (name === 'save') {
+      window.alert('저장하시겠습니까?');
       navigate('/board');
     }
   };
@@ -87,7 +87,13 @@ const BoarddWrite = ({ userObj }) => {
           >
             취소
           </Button>
-          <Button name="save" size='lg' variant='secondary' type='submit' onClick={onClick}>
+          <Button
+            name='save'
+            size='lg'
+            variant='secondary'
+            type='submit'
+            onClick={onClick}
+          >
             작성하기
           </Button>
         </div>
@@ -96,4 +102,4 @@ const BoarddWrite = ({ userObj }) => {
   );
 };
 
-export default BoarddWrite;
+export default DiaryForm;

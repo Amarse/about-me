@@ -6,7 +6,7 @@ import Profile from 'features/users/profile';
 const Navi = ({ userObj, refreshUser }) => (
   <nav>
     <ul className='menuItems'>
-      <li>
+      {/* <li>
         <Link to='/'>Home</Link>
       </li>
       <li>
@@ -14,7 +14,7 @@ const Navi = ({ userObj, refreshUser }) => (
       </li>
       <li>
         <Link to='/calender'>calender</Link>
-      </li>
+      </li> */}
       <li>
         {userObj ? <Profile userObj={userObj} refreshUser={refreshUser} /> :  <Link to='/login'>Login</Link>}
       </li>
