@@ -1,13 +1,12 @@
 import './login.modules.scss';
-import React, { useState } from 'react';
+import React from 'react';
 import { authService, firebaseInstance } from 'Fbase';
-import { useNavigate } from 'react-router-dom';
 
 const GoogleLogin = () => {
   const onSocialClick = (event) => {
     console.log(event.target.value);
     const {
-      target: { name, value },
+      target: { name },
     } = event;
     let provider;
     if (name === 'google') {
@@ -29,7 +28,7 @@ const GoogleLogin = () => {
         alt='구글 로그인'
         style={{ width: '250px', marginTop: '20px' }}
       /> */}
-      <button name='google' value={google} onClick={onSocialClick} className='button'>
+      <button name='google' onClick={onSocialClick} className='button'>
         구글 로그인
       </button>
     </div>

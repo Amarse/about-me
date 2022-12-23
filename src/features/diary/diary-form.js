@@ -1,15 +1,12 @@
 import './diary-form.modules.scss';
-// import 'react-quill/dist/quill.snow.css';
 import React, {
   useEffect,
   useState,
   useContext,
   useRef,
-  useCallback,
 } from 'react';
 import { DiaryContext } from 'context/diary.context.js';
 import { useFirebaseStore } from 'hooks/useStore.js';
-import { v4 as uuidv4 } from 'uuid';
 
 const DiaryForm = ({ uid }) => {
   const openHandler = useContext(DiaryContext);
@@ -27,7 +24,7 @@ const DiaryForm = ({ uid }) => {
     }
   }, [response.success]);
 
-  const onChange = useCallback((event) => {
+  const onChange = (event) => {
     console.log(event.target.id);
     event.preventDefault();
     const {
@@ -42,7 +39,7 @@ const DiaryForm = ({ uid }) => {
     } else if (id === 'date') {
       setDate(value);
     }
-  });
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
