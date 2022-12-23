@@ -6,7 +6,7 @@ import GoogleLogin from '../google-login';
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {error, isPending, login} = useLogin();
+  const { error, isPending, login } = useLogin();
 
   const onChange = (event) => {
     const {
@@ -28,25 +28,27 @@ const Auth = () => {
   return (
     <>
       <form onSubmit={onSubmit} className='login-form'>
+
+        <span className='title'>나만의 다이어트 기록을 적어보세요.</span>
         <label htmlFor='email'></label>
         <input
-        value={email}
-        type="email"
-        id="email"
-        placeholder="Email"
-        required
-        onChange={onChange}
+          value={email}
+          type='email'
+          id='email'
+          placeholder='Email'
+          required
+          onChange={onChange}
         />
         <label htmlFor='password'></label>
         <input
           value={password}
-          type="password"
+          type='password'
           id='password'
-          placeholder="Password"
+          placeholder='Password'
           required
           onChange={onChange}
         />
-      {!isPending && (
+        {!isPending && (
           <button type='submit' className='button'>
             Login
           </button>
@@ -54,7 +56,9 @@ const Auth = () => {
         {isPending && <strong>Now Processing...</strong>}
         {error && <strong>{error}</strong>}
       </form>
-      <GoogleLogin />
+      <div>
+        <GoogleLogin />
+      </div>
     </>
   );
 };

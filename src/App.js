@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import AppRouter from './router';
-import Navi from 'features/ui/navi';
+// import Navi from 'features/ui/navi';
 import { authService } from 'Fbase';
-import { AuthContextProvider } from 'centext/user.context';
-import { DiaryContextProvider } from 'centext/diary.context';
-import { useAuthContext } from 'hooks/useAuth';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { DiaryContextProvider } from 'context/diary.context';
+import {
+  Routes,
+  Route,
+  Navigate,
+  BrowserRouter,
+  useNavigate,
+} from 'react-router-dom';
 import Calender from 'pages/diary';
 import Login from 'pages/login';
-import Signup from 'pages/signup';
+import Navi from 'features/ui/navi';
 
 function App() {
   const [init, setInit] = useState(false);
-  const [userObj, setUserObj] = useState(null);
-  // console.log(user);
+  const [userObj, setUserObj] = useState({});
 
   useEffect(() => {
     // 구글 로그인 유지
@@ -33,41 +35,36 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Navi />
-      <DiaryContextProvider>
+    <DiaryContextProvider>
+      <div className='App'>
         {init ? (
-          <Routes>
-            <Route
-              path='/'
-              element={
-                userObj ? (
-                  <Calender userObj={userObj} />
-                ) : (
-                  <Navigate replace={true} to='/login' />
-                )
-              }
-            />
-            <Route
-              path='/login'
-              element={
-                !userObj ? <Login /> : <Navigate replace={true} to='/' />
-              }
-            />
-            {/*
-            <Route
-              path='/signup'
-              element={
-                !userObj ? <Signup /> : <Navigate replace={true} to='/' />
-              }
-            /> */}
-          </Routes>
+          <BrowserRouter>
+            <Navi userObj={userObj} />
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  userObj ? (
+                    <Calender userObj={userObj} />
+                  ) : (
+                    <Navigate replace={true} to='/login' />
+                  )
+                }
+              />
+              <Route
+                path='/login'
+                element={
+                  !userObj ? <Login /> : <Navigate replace={true} to='/' />
+                }
+              />
+            </Routes>
+          </BrowserRouter>
         ) : (
           'loading...'
         )}
-      </DiaryContextProvider>
-      <footer>&copy; {new Date().getFullYear()} Alice</footer>
-    </>
+        {/* <footer>&copy; {new Date().getFullYear()} Alice</footer> */}
+      </div>
+    </DiaryContextProvider>
   );
 }
 

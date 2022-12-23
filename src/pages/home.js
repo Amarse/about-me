@@ -7,7 +7,6 @@ const Home = () => {
 
   return (
     <main className="body">
-      {/* <Navi userObj={userObj} /> */}
       <div>
         <Calender />
       </div>

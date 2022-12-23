@@ -47,11 +47,12 @@ export const useFirebaseStore = (transaction) => {
 
   // 문서 추가
   const addDocument = async ( doc ) => {
-    console.log(doc)
+    console.log('dddd',doc)
     dispatch({ type: 'isPanging' });
     try {
       const createdTime = timeStemp.fromDate(new Date());
       const documentRef = await addDoc(collectionRef, { ...doc, createdTime });
+      console.log('ddd',doc.id)
       dispatch({ type: 'addDoc', payload: documentRef });
     } catch (error) {
       dispatch({ type: 'error', payload: error.message });
@@ -60,10 +61,11 @@ export const useFirebaseStore = (transaction) => {
 
   // 문서 삭제
   const deleteDocument = async (id) => {
+    console.log(id)
     dispatch({ type: 'isPending' });
     try {
       const documentRef = await deleteDoc(doc(collectionRef, id));
-
+      
       dispatch({ type: 'deleteDoc', payload: documentRef });
     } catch (error) {
       dispatch({ type: 'error', payload: error.message });

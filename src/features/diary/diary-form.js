@@ -7,7 +7,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import { DiaryContext } from 'centext/diary.context.js';
+import { DiaryContext } from 'context/diary.context.js';
 import { useFirebaseStore } from 'hooks/useStore.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -81,7 +81,7 @@ const DiaryForm = ({ uid }) => {
     <section className='form-container'>
       <form onSubmit={onSubmit}>
         <div className='input-container'>
-          <label>오늘은 ? </label>
+          <label>제목 :  </label>
           <input
             id='title'
             value={title}
@@ -95,7 +95,7 @@ const DiaryForm = ({ uid }) => {
           <input id='date' value={date} type='text' onChange={onChange} />
         </div>
         <div className='photo-container'>
-          <label htmlFor='file'>show your day </label>
+          <label htmlFor='file' className='file'>사진 : </label>
           <input
             id='file'
             type='file'
@@ -109,10 +109,7 @@ const DiaryForm = ({ uid }) => {
           />
           <div
             onClick={clickFileInput}
-            style={{
-              width: '100px',
-              height: '100px',
-            }}
+            
           >
             {photo === '' ? (
               <div className='empty-photo' />
@@ -120,27 +117,23 @@ const DiaryForm = ({ uid }) => {
               <img
                 src={photo}
                 alt='uploaded'
-                style={{
-                  width: '200px',
-                  height: '200px',
-                }}
               />
             )}
           </div>
         </div>
-        <div className='textareaContainer'>
-          <label htmlFor='content'>How was your day? </label>
+        <div className='textarea-container'>
+          <label htmlFor='content'>오늘 식단 기록 </label>
           <textarea
             id='content'
             type='text'
             value={content}
-            placeholder='✏️ type your day here'
+            placeholder='오늘하루를 기록해 보세요 🪄'
             required
             onChange={onChange}
           ></textarea>
         </div>
 
-        <div className='buttonContainer'>
+        <div className='button-container'>
           <button type='submit' onClick={onSubmit}>
             🎞 올리기 🎞
           </button>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { authService, firebaseInstance } from 'Fbase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { AuthContext } from '../centext/user.context.js';
+import { AuthContext } from '../context/user.context.js';
 import { useNavigate } from 'react-router-dom';
 
 export const useLogin = () => {

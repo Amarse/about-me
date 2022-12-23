@@ -24,10 +24,8 @@ export const useCollection = (transaction, myQuery) => {
     const unsubscribe = onSnapshot(
       myQuery ? q : collection(dbService, transaction),
       (snapshot) => {
-        console.log('ddd',transaction);
         let result = [];
         snapshot.docs.forEach((doc) => {
-          console.log(doc.data().photo)
           result.push({ ...doc.data(), id: doc.id });
         });
         setDocuments(result);

@@ -1,7 +1,7 @@
 import './modal.modules.scss';
 import React, { useContext } from "react";
 
-import { DiaryContext } from "centext/diary.context.js";
+import { DiaryContext } from 'context/diary.context'
 import DiaryForm from "../../diary/diary-form";
 
 import Diary from "../../diary";
@@ -11,7 +11,7 @@ const WriteModal = (props) => {
   const openHandler = useContext(DiaryContext);
   return (
     <div
-      className="diaryFormContainer"
+      className="diary-form-container"
       onClick={() => {
         openHandler.updateOpenHandler(false, "", openHandler.openState.data);
       }}

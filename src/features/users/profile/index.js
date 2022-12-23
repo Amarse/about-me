@@ -2,11 +2,11 @@ import './profile.modules.scss';
 import React, { useState } from 'react';
 import { authService } from 'Fbase';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'features/ui';
 import Modal from 'features/ui/modal';
 
-const Profile = ({ userObj }) => {
-  console.log('프로필', userObj);
+const Profile = (props) => {
+  console.log('프로필', props.user);
+  const user = props.user;
 
   const [isModal, setIsModal] = useState(false);
   const history = useNavigate();
@@ -24,16 +24,17 @@ const Profile = ({ userObj }) => {
   return (
     <div>
       <div onClick={onClick} className="image">
-        <img src={userObj.profile} alt='계정' />
+        <span >{user.displayName}</span>
+        {/* <img src={user.profile} alt='계정' /> */}
       </div>
       {isModal && (
         <Modal isModal={isModal} setIsModal={setIsModal}>
           <div className='profile-info' value={isModal}>
-            <span className='user-name'>{userObj.displayName}</span>
-            <span className='user-email'>{userObj.email}</span>
-            <Button onClick={onLogoutClick} value='로그아웃'>
+            <span className='user-name'>{user.displayName}</span>
+            <span className='user-email'>{user.email}</span>
+            <button onClick={onLogoutClick} value='로그아웃'>
               Log Out
-            </Button>
+            </button>
           </div>
         </Modal>
       )}

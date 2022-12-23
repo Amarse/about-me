@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { authService } from 'Fbase.js';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { AuthContext } from '../centext/user.context.js';
+import { AuthContext } from '../context/user.context.js';
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
