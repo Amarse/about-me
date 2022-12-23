@@ -1,104 +1,160 @@
-import 'react-quill/dist/quill.snow.css';
-import React, { useState } from 'react';
-import { Input } from 'features/ui';
-import { Button } from 'react-bootstrap';
-import ReactQuill, { Quill } from 'react-quill';
-import { useNavigate } from 'react-router';
-import { dbService } from 'Fbase';
-import ImageResize from 'quill-image-resize';
-Quill.register('modules/ImageResize', ImageResize);
+import './diary-form.modules.scss';
+// import 'react-quill/dist/quill.snow.css';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
+import { DiaryContext } from 'centext/diary.context.js';
+import { useFirebaseStore } from 'hooks/useStore.js';
+import { v4 as uuidv4 } from 'uuid';
 
-const DiaryForm = ({ userObj, seletedDate }) => {
-  const navigate = useNavigate();
-  const [quillText, setQuillText] = useState('');
+const DiaryForm = ({ uid }) => {
+  const openHandler = useContext(DiaryContext);
   const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [date, setDate] = useState(openHandler.openState.date);
+  const { addDocument, response } = useFirebaseStore('diary');
+  const fileInputRef = useRef();
 
-  const modules = {
-    ImageResize: {
-      displaySize: true,
-    },
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockqute'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-      ],
-      ['link', 'image'],
-      [{ align: [] }, { color: [] }, { background: [] }],
-      ['clean'],
-    ],
-  };
+  useEffect(() => {
+    if (response.success) {
+      setTitle('');
+      setContent('');
+    }
+  }, [response.success]);
 
-  const borad = {
-    content: quillText,
-    date: seletedDate,
-    uid: userObj.uid,
-    title: title,
-    // veiw: veiw,
-    name: userObj.displayName,
-  };
-
-  const onSubmit = async (event) => {
+  const onChange = useCallback((event) => {
+    console.log(event.target.id);
     event.preventDefault();
-    // save
-    await dbService.collection('borad').add(borad);
+    const {
+      target: { id, value },
+    } = event;
+
+    if (id === 'title') {
+      console.log('', id);
+      setTitle(value);
+    } else if (id === 'content') {
+      setContent(value);
+    } else if (id === 'date') {
+      setDate(value);
+    }
+  });
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    if (!photo) {
+      alert('사진을 넣어주세요!! 📷');
+    } else {
+      addDocument({
+        title: title,
+        uid: uid,
+        date: date,
+        photo: photo,
+        content: content,
+      });
+      openHandler.updateOpenHandler(false, '', null);
+    }
   };
 
-  const onClick = (e) => {
-    const {
-      target: { name },
-    } = e;
-    if (name === 'cancel') {
-      navigate('/board');
-    }
-    if (name === 'save') {
-      window.alert('저장하시겠습니까?');
-      navigate('/board');
-    }
+  const clickFileInput = () => {
+    fileInputRef.current.click();
   };
+
+  const fileHandler = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return new Promise((res) => {
+      reader.onload = () => {
+        setPhoto(reader.result);
+        res();
+      };
+    });
+  };
+
 
   return (
-    <>
+    <section className='form-container'>
       <form onSubmit={onSubmit}>
-        <div>
-          <Input
+        <div className='input-container'>
+          <label>오늘은 ? </label>
+          <input
+            id='title'
             value={title}
             type='text'
-            name='제목'
-            placeholder='제목을 입력해주세요'
-            onChange={(e) => setTitle(e.target.value)}
+            required
+            onChange={onChange}
           />
-          <ReactQuill
-            modules={modules}
-            value={quillText}
-            onChange={(e) => setQuillText(e)}
-          ></ReactQuill>
         </div>
-        <div>
-          <Button
-            name='cancel'
-            size='lg'
-            value='Submit'
-            onClick={onClick}
-            variant='outline-secondary'
+        <div className='input-container'>
+          <label>날짜 : </label>
+          <input id='date' value={date} type='text' onChange={onChange} />
+        </div>
+        <div className='photo-container'>
+          <label htmlFor='file'>show your day </label>
+          <input
+            id='file'
+            type='file'
+            ref={fileInputRef}
+            accept='image/*'
+            required
+            onChange={(e) => {
+              fileHandler(e.target.files[0]);
+            }}
+            style={{ display: 'none' }}
+          />
+          <div
+            onClick={clickFileInput}
+            style={{
+              width: '100px',
+              height: '100px',
+            }}
           >
-            취소
-          </Button>
-          <Button
-            name='save'
-            size='lg'
-            variant='secondary'
-            type='submit'
-            onClick={onClick}
+            {photo === '' ? (
+              <div className='empty-photo' />
+            ) : (
+              <img
+                src={photo}
+                alt='uploaded'
+                style={{
+                  width: '200px',
+                  height: '200px',
+                }}
+              />
+            )}
+          </div>
+        </div>
+        <div className='textareaContainer'>
+          <label htmlFor='content'>How was your day? </label>
+          <textarea
+            id='content'
+            type='text'
+            value={content}
+            placeholder='✏️ type your day here'
+            required
+            onChange={onChange}
+          ></textarea>
+        </div>
+
+        <div className='buttonContainer'>
+          <button type='submit' onClick={onSubmit}>
+            🎞 올리기 🎞
+          </button>
+          <button
+            type='button'
+            onClick={() => {
+              openHandler.updateOpenHandler(false, '', null);
+            }}
           >
-            작성하기
-          </Button>
+            ❌ 닫기 ❌
+          </button>
         </div>
       </form>
-    </>
+    </section>
   );
 };
 

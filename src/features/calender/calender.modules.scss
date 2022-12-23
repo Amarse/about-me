@@ -76,20 +76,28 @@
       .col.cell.valid {
         &:hover {
           @include common.hover-event();
-          @include common.shadow(1.5px, theme.$dark-gray-color, 0.1);
-          transform: scale(1.01);
-          border: none;
+          // @include common.shadow(1.5px, theme.$dark-gray-color, 0.1);
           background: transparentize(theme.$gray-color, 0.5);
         }
       }
       .col.cell.selected {
-        @include common.shadow(1.5px, theme.$main-color, 0.1);
-        transform: scale(1.02);
-        border: none;
-        background: theme.$sub-color;
-        color: theme.$main-color;
+        // @include common.shadow(1.5px, theme.$main-color, 0.1);        
+        // background: theme.$sub-color;
+        color: theme.$dashboard-icon-color;
         font-weight: 600;
       }
     }
+  }
+  .add-diary {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px solid #bbb;
+    border-radius: 50px;
+    background-color: #fff;
+    margin: -125px 0 20px -50px;
+    cursor: pointer;
   }
 }

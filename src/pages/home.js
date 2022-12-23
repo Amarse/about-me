@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { dbService } from "Fbase";
+import React from "react";
+
 import Calender from './diary'
 
 
-const Home = ({ userObj }) => {
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    dbService.collection("career").onSnapshot((snapshot) => {
-      const careerArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setList(careerArray);
-    });
-  }, []);
-
+const Home = () => {
 
   return (
     <main className="body">

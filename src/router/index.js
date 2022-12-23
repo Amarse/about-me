@@ -1,29 +1,33 @@
-import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import Home from 'pages/home';
-import NotFound from 'pages/notfound';
-import Login from 'features/users/login/auth';
-import Calender from 'pages/diary';
+// import React from 'react';
+// import { Route, Routes, Navigate } from 'react-router-dom';
+// import Home from 'pages/home';
+// import NotFound from 'pages/notfound';
+// import Login from 'pages/login';
 
-const Router = ({ refreshUser, userObj }) => {
-  console.log(userObj);
-  return (
-    <>
-      <Routes>
-        <>
-          <Route exact path='/' element={<Home userObj={userObj} />} />
-          <Route path='/calender' element={<Calender userObj={userObj} />} />
-          <Route element={<NotFound />} />
-          <Route path='/redirect' element={<Navigate to='/not-found' />} />
-        </>
+// import Calender from 'pages/diary';
+// import Signup from 'pages/signup';
 
-        <>
-          <Route path='/login' element={<Login />} />
-          <Route path='/404' element={<NotFound />} />
-        </>
-      </Routes>
-    </>
-  );
-};
+// const Router = ({ refreshUser, userObj }) => {
+//   return (
+//     <>
+//       <Routes>
+//         <>
+//           <Route exact path='/' element={<Home userObj={userObj} />} />
+//           <Route path='/calender' element={<Calender userObj={userObj} />} />
+//           {/* <Route path='/login' element={<Login userObj={userObj} />} /> */}
+//           <Route path='/signup' element={<Signup  />} />
 
-export default Router;
+//           <Route element={<NotFound />} />
+//           <Route path='/redirect' element={<Navigate to='/not-found' />} />
+//         </>
+
+//         <>
+//           <Route path='/login' element={<Login />} />
+//           <Route path='/404' element={<NotFound />} />
+//         </>
+//       </Routes>
+//     </>
+//   );
+// };
+
+// export default Router;

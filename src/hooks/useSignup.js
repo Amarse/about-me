@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import { authService } from 'Fbase.js';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useAuthContext } from './useAuthContext';
+import { AuthContext } from '../centext/user.context.js';
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
 
   const [isPending, setIsPending] = useState(false);
-  const { dispatch } = useAuthContext();
+  const { dispatch } = AuthContext;
 
-  const signup = (email, password, displayName) => {
+  const signup = (email, password, nickName) => {
     setError(null);
     setIsPending(true);
     createUserWithEmailAndPassword(authService, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then((credential) => {
+        const user = credential.user;
 
         if (!user) {
           throw new Error('회원가입에 실패했습니다.');
         }
 
-        updateProfile(authService.currentUser, { displayName })
+        updateProfile(authService.currentUser, { nickName })
           .then(() => {
             dispatch({ type: 'login', payload: user });
             setError(null);

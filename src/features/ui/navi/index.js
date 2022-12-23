@@ -2,6 +2,7 @@ import './navi.modules.scss';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Profile from 'features/users/profile';
+import Signup from 'pages/signup';
 
 const Navi = ({ userObj, refreshUser }) => (
   <nav>
@@ -16,7 +17,12 @@ const Navi = ({ userObj, refreshUser }) => (
         <Link to='/calender'>calender</Link>
       </li> */}
       <li>
-        {userObj ? <Profile userObj={userObj} refreshUser={refreshUser} /> :  <Link to='/login'>Login</Link>}
+        {!userObj && <Signup />}
+        {userObj ? (
+          <Profile userObj={userObj} refreshUser={refreshUser} />
+        ) : (
+          <Link to='/login'>Login</Link>
+        )}
       </li>
     </ul>
   </nav>

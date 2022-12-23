@@ -1,66 +1,58 @@
-import { authService } from 'Fbase';
-import { Input, Button } from 'features/ui';
+import './auth.modules.scss';
+import { useLogin } from 'hooks/useLogin';
 import React, { useState } from 'react';
 import GoogleLogin from '../google-login';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [newAccount, setNewAccount] = useState(true);
+  const {error, isPending, login} = useLogin();
 
   const onChange = (event) => {
     const {
-      target: { name, value },
+      target: { type, value },
     } = event;
 
-    if (name === 'email') {
+    if (type === 'email') {
       setEmail(value);
-    } else if (name === 'password') {
+    } else if (type === 'password') {
       setPassword(value);
     }
   };
 
   const onSubmit = async (event) => {
-    console.log(event)
     event.preventDefault();
-    try {
-      if (newAccount) {
-        await authService.createUserWithEmailAndPassword(email, password);
-      } else {
-        await authService.signInWithEmailAndPassword(email, password);
-      }
-    } catch (error) {
-      setError(error.message);
-    }
+    login(email, password); //hook에 써놓은거
   };
-
-  const toggleAccount = () => setNewAccount((prev) => !prev);
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <Input
-        name="email"
+      <form onSubmit={onSubmit} className='login-form'>
+        <label htmlFor='email'></label>
+        <input
+        value={email}
         type="email"
+        id="email"
         placeholder="Email"
         required
-        value={email}
         onChange={onChange}
         />
-        <Input
-          name="password"
+        <label htmlFor='password'></label>
+        <input
+          value={password}
           type="password"
+          id='password'
           placeholder="Password"
           required
-          value={password}
           onChange={onChange}
         />
-        <Button
-          type='submit'
-          onClick={toggleAccount}
-          value={newAccount ? 'Login' : 'Create Account'}
-        />
+      {!isPending && (
+          <button type='submit' className='button'>
+            Login
+          </button>
+        )}
+        {isPending && <strong>Now Processing...</strong>}
+        {error && <strong>{error}</strong>}
       </form>
       <GoogleLogin />
     </>

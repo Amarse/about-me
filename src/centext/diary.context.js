@@ -4,14 +4,17 @@ const DiaryContext = createContext();
 
 const DiaryContextProvider = ({ children }) => {
   const [openState, setOpenState] = useState({
-    isDiaryOpen: false,
+    isOpen: false,
     date: '',
+    data: null,
   });
-  const updateOpenState = (bool, date) => {
+  const updateOpenState = (bool, date, data) => {
+    console.log('dddd',data)
     console.log('click');
     setOpenState({
-      isDiaryOpen: bool,
+      isOpen: bool,
       date: date,
+      data: data,
     });
   };
 
@@ -19,6 +22,8 @@ const DiaryContextProvider = ({ children }) => {
     openState: openState,
     updateOpenHandler: updateOpenState,
   };
+
+
   return (
     <DiaryContext.Provider value={contextValue}>
       {children}

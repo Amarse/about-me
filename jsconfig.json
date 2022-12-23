@@ -3,7 +3,9 @@
     "lib" : [ "ES2016"],
     "baseUrl": "src",
     "paths": {
-      "features/*": ["src/features/*"]
+      "features/*": ["src/features/*"],
+      "hooks/*" :["src/hooks/*"],
+      "context/*" :["src/context/*"]
     }
   },
   "include": ["src"]

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { authService } from 'Fbase.js';
-import { useAuthContext } from './useAuthContext';
+import { AuthContext } from '../centext/user.context.js';
 
 export const useLogout = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const { dispatch } = useAuthContext();
+  const { dispatch } = AuthContext();
 
   const logout = () => {
     setError(null);

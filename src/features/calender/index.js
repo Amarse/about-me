@@ -1,11 +1,10 @@
 import './calender.modules.scss';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Icon } from '@iconify/react';
 import {
   format,
   addMonths,
   subMonths,
-  parse,
   isSameMonth,
   isSameDay,
   addDays,
@@ -14,7 +13,11 @@ import {
   startOfWeek,
   endOfWeek,
 } from 'date-fns';
-import DiaryWrite from 'features/diary';
+import WriteModal from 'features/ui/write-modal';
+import { DiaryContext } from 'centext/diary.context.js';
+import { useCollection } from 'hooks/useCollection.js';
+
+
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
@@ -50,12 +53,17 @@ const RenderDays = () => {
   return <div className='days row'>{days}</div>;
 };
 
-const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
+const RenderCells = ({
+  currentMonth,
+  selectedDate,
+  onDateClick,
+  documents,
+}) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
-
+  const openHandler = useContext(DiaryContext);
   const rows = [];
   let days = [];
   let day = startDate;
@@ -65,8 +73,26 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, 'd');
       const cloneDay = day;
+      let data;
+      documents &&
+        documents.forEach((doc) => {
+          let dir = {
+            content: doc.content,
+            uid: doc.uid,
+            photo: doc.photo,
+            title: doc.title,
+            date: doc.date,
+            // id: id,
+          };
+          console.log('sss', dir.date)
+          if (dir.date === format(day, 'yyyyMMMdd')) {
+            console.log(format(day, 'yyyyMMdd'))
+            data = dir;
+            console.log(data)
+          }
+        });
       days.push(
-        <div
+        <li
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? 'disabled'
@@ -77,7 +103,14 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
               : 'valid'
           }`}
           key={day}
-          onClick={() => onDateClick(parse(cloneDay))}
+          onClick={() => {
+            onDateClick(cloneDay);
+            openHandler.updateOpenHandler(false, '', null);
+            {
+              data && openHandler.updateOpenHandler(true, "", data);
+              console.log(data)
+            }
+          }}
         >
           <span
             className={
@@ -88,14 +121,24 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
           >
             {formattedDate}
           </span>
-        </div>
+          <span
+            style={{
+              width: "24px",
+              height: "20px",
+              backgroundImage: `url(${data && data.photo})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center bottom",
+            }}
+          />
+        </li>
       );
       day = addDays(day, 1);
     }
     rows.push(
-      <div className='row' key={day}>
+      <ul className='row' key={day}>
         {days}
-      </div>
+      </ul>
     );
     days = [];
   }
@@ -103,10 +146,12 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 };
 
 const Calender = (props) => {
-  console.log('user',props)
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDiaryOpen, setIsDiaryOpen] = useState(false);
+  const openHandler = useContext(DiaryContext);
+  const user = props.userObj;
+  const { documents, error } = useCollection('diary', );
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -119,8 +164,8 @@ const Calender = (props) => {
 
   const onClick = (event) => {
     event.preventDefault();
-    setIsDiaryOpen(true)
-  }
+    setIsDiaryOpen(true);
+  };
 
   return (
     <div className='calendar'>
@@ -134,11 +179,40 @@ const Calender = (props) => {
         currentMonth={currentMonth}
         selectedDate={selectedDate}
         onDateClick={onDateClick}
+        documents={documents !== null && documents}
       />
-      <Icon icon='ph:pencil-line-thin' onClick={onClick} />
-      {isDiaryOpen && (
-        <DiaryWrite isDiaryOpen={isDiaryOpen} userObj={props.userObj} selectedDate={selectedDate} setIsDiaryOpen={setIsDiaryOpen}/>
-      )}
+      <Icon
+        icon='ph:pencil-line-thin'
+        onClick={() => {
+          openHandler.updateOpenHandler(
+            true,
+            format(selectedDate, 'yyyyMMMdd'),
+            openHandler.openState.data
+          );
+        }}
+      />
+      {/* <div
+        className='add-diary'
+        onClick={() => {
+          openHandler.updateOpenHandler(
+            true,
+            format(selectedDate, 'yyyyMMMdd'),
+            openHandler.openState.data
+          );
+        }}
+      >
+        +
+      </div> */}
+      {openHandler.openState.isOpen && <WriteModal user={user} />}
+      {error && <strong>{error}</strong>}
+      {/* {isDiaryOpen && (
+        <DiaryWrite
+          isDiaryOpen={isDiaryOpen}
+          userObj={props.userObj}
+          selectedDate={selectedDate}
+          setIsDiaryOpen={setIsDiaryOpen}
+        />
+      )} */}
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
-import Auth from 'features/users/login/auth';
+import GoogleLogin from 'features/users/login/google-login';
 
 const Login = () => {
   return (
-    <main className="body">
-      <Auth />
+    <main className='body'>
+      <GoogleLogin />
     </main>
   );
 };

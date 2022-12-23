@@ -1,0 +1,81 @@
+.form-container {
+  width: 800px;
+  height: 630px;
+  background-color: antiquewhite;
+  border-radius: 15px;
+  box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: calc(50vh - 320px);
+  left: calc(50vw - 400px);
+
+  .form-container label {
+    font-size: 1.1rem;
+    font-weight: lighter;
+    margin-left: 30px;
+    .form-container input {
+      font-size: 1.1rem;
+      font-weight: lighter;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      border-bottom: 1px solid black;
+      text-align: center;
+      margin-left: 30px;
+    }
+  }
+
+  .input-container {
+    width: 80%;
+    height: 60px;
+    padding: 20px;
+  }
+  .photo-container {
+    display: flex;
+    padding: 20px;
+    .empty-photo {
+      width: 130px;
+      height: 130px;
+      margin-left: 100px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/401/401061.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 65% 50%;
+      cursor: pointer;
+    }
+    .photo-container img {
+      max-width: 400px;
+      height: 130px;
+      margin-left: 100px;
+      object-fit: cover;
+    }
+  }
+
+  .textarea-container {
+    padding: 30px 20px 20px;
+    .textarea-container textarea {
+      display: block;
+      width: 600px;
+      height: 150px;
+      resize: none;
+      margin: 20px auto 0;
+      background-color: transparent;
+      padding: 10px;
+    }
+  }
+
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    .button-container button {
+      padding: 10px 40px;
+      border: none;
+      border-radius: 10px;
+      background-color: #fffaf6;
+    }
+    .button-container button:hover {
+      background-color: #ff9494;
+      color: #fffaf6;
+    }
+  }
+}

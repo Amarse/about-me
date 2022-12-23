@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { AuthContext } from '../centext/user.context.js';
+import { AuthContext } from 'centext/user.context.js';
 
-export const useAuthContext = () => {
+export const useAuthContext = () => { 
   const context = useContext(AuthContext);
 
   return context;

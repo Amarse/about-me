@@ -1,43 +1,42 @@
 import './diary.modules.scss';
-import { DiaryContext } from 'centext/diary.context';
-import React, { useContext, useEffect, useRef } from 'react';
-import { format } from 'date-fns';
-import DiaryForm from './diary-form';
+import { DiaryContext } from 'centext/diary.context.js';
+import React, { useContext } from 'react';
+import { useFirebaseStore } from 'hooks/useStore.js';
 import { Icon } from '@iconify/react';
 
-const DiaryWrite = ({ userObj, seletedDate, isDiaryOpen, setIsDiaryOpen }) => {
+const Diary = () => {
   const openHandler = useContext(DiaryContext);
-  const wrapper = useRef();
-
-  const closeModal = (event) => {
-    event.preventDefault();
-    setIsDiaryOpen(false);
-  };
+  const { deleteDocument } = useFirebaseStore('diary');
+  const data = openHandler.openState.data;
 
   return (
-    <div className='diary-modal-continer'>
-      <div className='diary-modal' ref={wrapper} value={isDiaryOpen}>
-        <div>
-          <Icon
-            className='icon'
-            icon='ri:close-circle-fill'
-            onClick={closeModal}
-          />
-        </div>
-        <div
+    <section className='diaryContainer'>
+      <h2>{data.title}</h2>
+      <span>{data.date}</span>
+      <img src={data.photo} />
+      <p>{data.content}</p>
+      <div className='buttonContainer'>
+        <button
           onClick={() => {
-            openHandler.updateOpenHandler(false, '');
+            if (window.confirm('Are you sure you want to delete it?')) {
+              deleteDocument(data.id);
+              openHandler.updateOpenHandler(false, '', data);
+            }
           }}
-        ></div>
-        <div onClick={(e) => e.stopPropagation()}>
-          {openHandler.openState.data === null && (
-            <DiaryForm userObj={userObj} seletedDate={seletedDate} />
-          )}
-          {openHandler.openState.data && <DiaryWrite />}
-        </div>
+        >
+          delete
+        </button>
+        <button>modify</button>
+        <button
+          onClick={() => {
+            openHandler.updateOpenHandler(false, '', data);
+          }}
+        >
+          ❌close
+        </button>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default DiaryWrite;
+export default Diary;

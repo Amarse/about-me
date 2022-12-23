@@ -8,6 +8,8 @@ const AuthContext = createContext();
 
 const authReducer = (state, action) => {
   switch (action.type) {
+    case 'google':
+      return { ...state, user: action.playlod };
     case 'login':
       return { ...state, user: action.payload };
     case 'logout':
@@ -33,7 +35,11 @@ const AuthContextProvider = ({ children }) => {
     return unSubscribe;
   }, []);
 
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export { AuthContext, AuthContextProvider };
