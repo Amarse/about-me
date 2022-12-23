@@ -1,0 +1,37 @@
+@use '../../../styles/common' as common;
+@use '../../../styles/theme';
+
+.menu-items {
+  width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  margin: auto;
+
+  .title {
+    font-size: 30px;
+    color: theme.$dashboard-icon-color;
+  }
+
+  .list {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 50px;
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+
+    button {
+      margin-left: 20px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background-color: #ff9494;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}

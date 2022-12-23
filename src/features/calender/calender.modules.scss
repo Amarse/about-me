@@ -1,0 +1,19 @@
+@use '../../styles/theme.scss';
+
+.calendar {
+  width: fit-content;
+  margin: 0 auto;
+
+  .write {
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+    position: absolute;
+    bottom: 10%;
+    right: 15%;
+    color: theme.$main-color;
+    &:hover {
+      color: theme.$dashboard-icon-color;
+    }
+  }
+}

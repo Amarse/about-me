@@ -1,0 +1,53 @@
+@use '../../styles/theme.scss';
+@use '../../styles/common.scss' as common;
+
+.cells-container {
+  width: fit-content;
+  margin: 0 auto;
+  // width: 100%;
+  ul {
+    display: flex;
+    padding-left: 0;
+
+    &:first-of-type {
+      padding-top: 17px;
+    }
+    .disabled {
+      color: #ddd;
+    }
+    .valid {
+      color: black;
+    }
+    .selected {
+      color: theme.$dashboard-icon-color;
+
+    }
+    .valid:hover,
+    .selected:hover {
+      color: theme.$dashboard-icon-color;
+      font-weight: 600;
+    }
+
+    li {
+      margin: 0 0 4px 0;
+      display: block;
+      width: 120px;
+      height: 120px;
+      padding: 10px;
+      margin: 2px 2px 0 2px;
+      border: 0.4px solid transparentize(gray, 0.06);
+      border-radius: 3px;
+      font-size: 1em;
+      box-sizing: border-box;
+      cursor: pointer;
+      // &:last-of-type {
+      //   border-right: 0.5px solid #ddd;
+      // }
+    }
+  }
+}
+
+
+.cellsContainer ul .cellsContainer ul .cellsContainer ul .selected {
+  color: #ff9494;
+}

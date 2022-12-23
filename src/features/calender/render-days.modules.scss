@@ -1,0 +1,12 @@
+.days-container{
+  width: 100%;
+  display: flex;
+  padding-top: 17px;
+  margin-bottom: -17px;
+  .col {
+    display: block;
+    width: 120px;
+    height: 30px;
+    text-align: center;
+  }
+}

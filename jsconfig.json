@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-      "baseUrl": "src",
-      "paths": {
-        "@features": ["src/features/*"]
-      }
+    "lib" : [ "ES2016"],
+    "baseUrl": "src",
+    "paths": {
+      "features/*": ["src/features/*"],
+      "hooks/*" :["src/hooks/*"],
+      "context/*" :["src/context/*"]
+    }
   },
-  "include": [
-      "src"
-  ]
+  "include": ["src"]
 }

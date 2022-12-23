@@ -1,0 +1,63 @@
+@use '../../styles/theme.scss';
+@use '../../styles/common.scss' as common;
+
+.diary-container {
+  width: 800px;
+  height: 630px;
+  background-color: theme.$background-color;
+  border-radius: 15px;
+  box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: calc(50vh - 320px);
+  left: calc(50vw - 400px);
+
+  h2 {
+    padding: 28px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  span {
+    display: block;
+    padding: 0 100px;
+    text-align: end;
+  }
+
+  img {
+    @include common.size(80%, 40%);
+    display: block;
+    object-fit: cover;
+    margin: 20px auto;
+  }
+  p {
+    display: block;
+    max-width: 500px;
+    height: 150px;
+    margin: auto;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+
+    button {
+      padding: 10px 40px;
+      border: none;
+      border-radius: 10px;
+      background-color: #fffaf6;
+      background-color: theme.$sub-color;
+
+      box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+      &:hover {
+        @include common.hover-event();
+        background-color: theme.$dashboard-icon-color;
+        color: #fffaf6;
+      }
+    }
+  }
+}
