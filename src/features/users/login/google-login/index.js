@@ -4,8 +4,6 @@ import { authService, firebaseInstance } from 'Fbase';
 import { useNavigate } from 'react-router-dom';
 
 const GoogleLogin = () => {
-  const navigate = useNavigate();
-  const [google, setGoogle] = useState(null);
   const onSocialClick = (event) => {
     console.log(event.target.value);
     const {
