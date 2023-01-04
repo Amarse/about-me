@@ -1,5 +1,4 @@
 import './diary-form.modules.scss';
-// import 'react-quill/dist/quill.snow.css';
 import React, {
   useEffect,
   useState,
@@ -9,7 +8,6 @@ import React, {
 } from 'react';
 import { DiaryContext } from 'context/diary.context.js';
 import { useFirebaseStore } from 'hooks/useStore.js';
-import { v4 as uuidv4 } from 'uuid';
 
 const DiaryForm = ({ uid }) => {
   const openHandler = useContext(DiaryContext);

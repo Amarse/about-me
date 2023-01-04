@@ -36,7 +36,6 @@ const RenderCells = ({
       let data;
       documents &&
         documents.forEach((doc) => {
-          console.log(doc.id)
           let dir = {
             content: doc.content,
             uid: doc.uid,

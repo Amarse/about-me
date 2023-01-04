@@ -2,7 +2,6 @@ import './diary.modules.scss';
 import { DiaryContext } from 'context/diary.context.js';
 import React, { useContext } from 'react';
 import { useFirebaseStore } from 'hooks/useStore.js';
-import { Icon } from '@iconify/react';
 
 const Diary = () => {
   const openHandler = useContext(DiaryContext);

@@ -4,7 +4,7 @@ import { format, addMonths, subMonths } from 'date-fns';
 import WriteModal from 'features/ui/write-modal';
 import { DiaryContext } from 'context/diary.context.js';
 import { useCollection } from 'hooks/useCollection.js';
-import RenderCells from './reder-cell';
+import RenderCells from './render-cell';
 import RenderHeader from './render-header';
 import RenderDays from './render-days';
 import { Icon } from '@iconify/react';
